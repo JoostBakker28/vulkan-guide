@@ -1,8 +1,8 @@
 ﻿
 #include "vk_engine.h"
 
-#include <SDL.h>
-#include <SDL_vulkan.h>
+#include <SDL3/SDL.h>
+#include <SDL3/SDL_vulkan.h>
 
 #include <vk_types.h>
 #include <vk_initializers.h>
@@ -13,16 +13,17 @@ void VulkanEngine::init()
 	SDL_Init(SDL_INIT_VIDEO);
 
 	SDL_WindowFlags window_flags = (SDL_WindowFlags)(SDL_WINDOW_VULKAN);
-	
+
+	// SDL3's SDL_CreateWindow signature is:
+	// SDL_Window* SDL_CreateWindow(const char *title, int w, int h, Uint32 flags);
+	// Remove position arguments for SDL3 compatibility.
 	_window = SDL_CreateWindow(
 		"Vulkan Engine",
-		SDL_WINDOWPOS_UNDEFINED,
-		SDL_WINDOWPOS_UNDEFINED,
 		_windowExtent.width,
 		_windowExtent.height,
 		window_flags
 	);
-	
+
 	//everything went fine
 	_isInitialized = true;
     // Add the correct include path for SDL2 in your project settings:
@@ -30,8 +31,6 @@ void VulkanEngine::init()
     //   Right-click your project > Properties > C/C++ > General > Additional Include Directories
     //   Add the path to your SDL2 include folder, e.g., C:\libs\SDL2\include
     // Also, ensure SDL2.lib is linked in Linker > Input > Additional Dependencies
-
-
 }
 void VulkanEngine::cleanup()
 {	
@@ -58,7 +57,7 @@ void VulkanEngine::run()
 		while (SDL_PollEvent(&e) != 0)
 		{
 			//close the window when user alt-f4s or clicks the X button			
-			if (e.type == SDL_QUIT) bQuit = true;
+			if (e.type == SDL_EVENT_QUIT) bQuit = true;
 		}
 
 		draw();
