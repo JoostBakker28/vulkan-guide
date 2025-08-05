@@ -25,6 +25,13 @@ void VulkanEngine::init()
 	
 	//everything went fine
 	_isInitialized = true;
+    // Add the correct include path for SDL2 in your project settings:
+    // For Visual Studio: 
+    //   Right-click your project > Properties > C/C++ > General > Additional Include Directories
+    //   Add the path to your SDL2 include folder, e.g., C:\libs\SDL2\include
+    // Also, ensure SDL2.lib is linked in Linker > Input > Additional Dependencies
+
+
 }
 void VulkanEngine::cleanup()
 {	
